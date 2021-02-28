@@ -8,6 +8,7 @@ public class Slice : MonoBehaviour
 {
 
     public Material mt;
+   // public Vector3 plane_normal;
 
 
     /// <summary>
@@ -15,7 +16,7 @@ public class Slice : MonoBehaviour
     /// </summary>
     /// <param name="target">자를 오브젝트</param>
     /// <returns></returns>
-    public  GameObject[] Slicer(GameObject target , Material material)
+    public  GameObject[] Slicer(GameObject target , Material material , Vector3 contact)
     {
       
       
@@ -31,41 +32,42 @@ public class Slice : MonoBehaviour
 
         Vector2[] orin_uvs = orin_Mesh.uv;
 
+        Vector3 slicer_center = Vector3.zero;
+    
+          //1.번개 접촉면의 위치를 계산
+          //2.오브젝트의 중앙점과 가장먼거리의 정점들을 리스트에 넣는다. 그리고 접촉면과의 가장가까운 점을 찾는다.
+          //3. 그러면 삼각형이 만들어지는데 접촉면을 지나고 가장 먼점  -  중앙의 벡터가 수직인 평면을 만들어 낸다.
 
+        for(int i = 0; i < orin_vertics.Length; i++)
+        {
+            slicer_center += orin_vertics[i];
 
-        // 임의로 노멀을 생성 , 오브젝트 정점중 하나를 단면으로 자를 포인트로 잡는다.
-        Vector3 plan_normal = new Vector3(Random.value, Random.value, Random.value);
-  
-        Vector3 point = orin_vertics[Random.Range(0, orin_vertics.Length)];
+        }
 
-        Plane random_plane = new Plane(plan_normal.normalized, point);
+        slicer_center = slicer_center / orin_vertics.Length;
+
+       
+
+        
+   
+
+        Vector3 point = contact;
+        Vector3 plane_normal = FirstCreateNormal(orin_vertics, slicer_center, contact); //new Vector3(Random.value,Random.value,Random.value);     
+        Plane random_plane = new Plane(plane_normal.normalized, point);
 
 
         //기존 정점들을 두 가지로 나누어 저장해둘 곳
 
         List<Vector3> slide_verticsA = new List<Vector3>();
-
         List<Vector3> slide_verticsB = new List<Vector3>();
 
-
-
-
         List<Vector3> slide_normalsA = new List<Vector3>();
-
         List<Vector3> slide_normalsB = new List<Vector3>();
 
-
-
-
         List<Vector2> slide_uvsA = new List<Vector2>();
-
         List<Vector2> slide_uvsB = new List<Vector2>();
 
-
-
-
         List<int> slide_triA = new List<int>();
-
         List<int> slide_triB = new List<int>();
 
 
@@ -74,21 +76,10 @@ public class Slice : MonoBehaviour
         //새로운 정점 , uv , normal
 
         List<Vector3> new_vertics = new List<Vector3>();
-
         List<Vector3> new_normals = new List<Vector3>();
-
         List<Vector2> new_uvs = new List<Vector2>();
 
-
-
-
-
-
-
         int t_cnt = orin_Mesh.triangles.Length / 3;
-
-
-
 
         for (int i = 0; i < t_cnt; i++)
 
@@ -443,7 +434,42 @@ public class Slice : MonoBehaviour
             out aSideCutT , out bSideCutT
             );
 
-  
+        for(int i = 0; i < aSideCutT.Count; i++)
+        {
+            aSideCutT[i] += slide_verticsA.Count;
+        }
+
+        for(int i = 0; i< bSideCutT.Count; i++)
+        {
+            bSideCutT[i] += slide_verticsB.Count;
+
+        }
+
+
+        List<Vector3> final_vertA = new List<Vector3>();
+        List<Vector3> final_vertB = new List<Vector3>();
+        List<Vector3> final_norA = new List<Vector3>();
+        List<Vector3> final_norB = new List<Vector3>();
+        List<Vector2> final_uvA = new List<Vector2>();
+        List<Vector2> final_uvB = new List<Vector2>();
+
+        final_vertA.AddRange(slide_verticsA);
+        final_vertA.AddRange(aSideCutVerts);
+        final_vertB.AddRange(slide_verticsB);
+        final_vertB.AddRange(bSideCutVerts);
+        final_norA.AddRange(slide_normalsA);
+        final_norA.AddRange(aSideCutNormals);
+        final_norB.AddRange(slide_normalsB);
+        final_norB.AddRange(bSideCutNormals);
+        final_uvA.AddRange(slide_uvsA);
+        final_uvA.AddRange(aSideCutUVs);
+        final_uvB.AddRange(slide_uvsB);
+        final_uvB.AddRange(bSideCutUVs);
+
+
+
+
+
         Mesh aMesh = new Mesh();
 
         Mesh bMesh = new Mesh();
@@ -451,11 +477,11 @@ public class Slice : MonoBehaviour
 
 
 
-        aMesh.vertices = slide_verticsA.ToArray();
+        aMesh.vertices = final_vertA.ToArray();
 
-        aMesh.normals = slide_normalsA.ToArray();
+        aMesh.normals = final_norA.ToArray();
 
-        aMesh.uv = slide_uvsA.ToArray();
+        aMesh.uv = final_uvA.ToArray();
         aMesh.subMeshCount = target.GetComponent<MeshRenderer>().sharedMaterials.Length + 1;
         aMesh.SetTriangles(slide_triA, 0);
         aMesh.SetTriangles(aSideCutT, target.GetComponent<MeshRenderer>().sharedMaterials.Length);
@@ -466,11 +492,11 @@ public class Slice : MonoBehaviour
 
 
 
-        bMesh.vertices = slide_verticsB.ToArray();
+        bMesh.vertices = final_vertB.ToArray();
 
-        bMesh.normals = slide_normalsB.ToArray();
+        bMesh.normals = final_norB.ToArray();
 
-        bMesh.uv = slide_uvsB.ToArray();
+        bMesh.uv = final_uvB.ToArray();
         bMesh.subMeshCount = target.GetComponent<MeshRenderer>().sharedMaterials.Length + 1;
         bMesh.SetTriangles(slide_triB, 0);
         bMesh.SetTriangles(bSideCutT, target.GetComponent<MeshRenderer>().sharedMaterials.Length);
@@ -481,11 +507,21 @@ public class Slice : MonoBehaviour
 
 
         GameObject aObject = new GameObject(target.name + "_A", typeof(MeshFilter), typeof(MeshRenderer), typeof(Slice));
+        if(aObject.GetComponent<Slice>().mt == null)
+        {
+            aObject.GetComponent<Slice>().mt = mt;
+        }
+
+        //aObject.GetComponent<Slice>().plane_normal = Vector3.Cross(aSideCutVerts[0] - point, plane_normal);
+
 
         GameObject bObject = new GameObject(target.name + "_B", typeof(MeshFilter), typeof(MeshRenderer), typeof(Slice));
+        if(bObject.GetComponent<Slice>().mt == null)
+        {
+            bObject.GetComponent<Slice>().mt = mt;
+        }
 
-
-
+       //bObject.GetComponent<Slice>().plane_normal = Vector3.Cross(bSideCutVerts[0] - point, plane_normal);
 
         Material[] mats = new Material[target.GetComponent<MeshRenderer>().sharedMaterials.Length + 1];
 
@@ -693,37 +729,71 @@ public class Slice : MonoBehaviour
     }
 
 
-
-
-    public void SliceColl()
+    /// <summary>
+    ///  처음 자를 노멀 생성
+    /// </summary>
+    /// <param name="orin_vertics"></param>
+    /// <param name="slicer_center"></param>
+    /// <param name="contact"></param>
+    Vector3 FirstCreateNormal(Vector3[] ov ,Vector3 sc, Vector3 ct )
     {
+        float maxDistance = 0;
+        float minDistance = 1000f;
 
-
-       Slicer(this.gameObject , mt);
-
-    }
-
-
-
-
-
-
-
-    private void Update()
-
-    {
-
-
-
-        if (Input.GetKeyDown(KeyCode.A))
-
+        Dictionary<int,float> maxDisDic = new Dictionary<int, float>();
+        Dictionary<int,float> FindDisDic = new Dictionary<int, float>();
+        Dictionary<int, float> minDisDic = new Dictionary<int, float>();
+        List<int> minindex = new List<int>();
+        for(int i = 0; i < ov.Length; i++)
         {
+            if (maxDistance <= Vector3.Distance(ov[i], sc))
+            {
+                maxDistance = Vector3.Distance(ov[i], sc);
 
-            SliceColl();
+            }
+
+            maxDisDic.Add(i,maxDistance);
 
         }
 
+        foreach(var dis in maxDisDic)
+        {
+            if(maxDistance == dis.Value)
+            {
+                FindDisDic.Add(dis.Key, dis.Value);
 
+            }
+
+
+        }
+
+        foreach(var dis in FindDisDic)
+        {
+            if(minDistance > Vector3.Distance(ov[dis.Key] , ct))
+            {
+                minDistance = Vector3.Distance(ov[dis.Key], ct);
+
+            }
+
+            minDisDic.Add(dis.Key, minDistance);
+
+        }
+
+        foreach(var dis in minDisDic)
+        {
+            if(minDistance == dis.Value)
+            {
+                minindex.Add(dis.Key);
+
+            }
+        }
+
+           var firstnormal =  ov[minindex[0]] - sc;
+
+
+        return firstnormal;
+
+      
     }
 
 
@@ -731,7 +801,16 @@ public class Slice : MonoBehaviour
 
 
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.collider.tag == "Lightning")
+        {
 
+            Slicer(gameObject, mt, collision.contacts[0].point);
+
+            collision.collider.gameObject.SetActive(false);
+        }   
+    }
 
 
 

@@ -35,11 +35,14 @@ public class PlayerControl : MonoBehaviour
 
    
 
-    private Rigidbody rigid;
+   // private Rigidbody rigid;
     private Rigidbody character_rigid;
 
     public float distanceX;   // 캐릭터x와 - 카메라x의 거리
     public float distanceZ;   // 캐릭터z와 - 카메라z의 위치
+    private float distanceY; 
+
+
 
     public float player_hp = 20f;
 
@@ -83,13 +86,16 @@ public class PlayerControl : MonoBehaviour
 
     private void Start()
     {
-        rigid = GetComponent<Rigidbody>();
-        character_rigid = Character.GetComponent<Rigidbody>();
+        //rigid = GetComponent<Rigidbody>();
+        //character_rigid = Character.GetComponent<Rigidbody>();
+
+
+        distanceY = Mathf.Abs(transform.position.y - player_camera.transform.position.y);
     }
 
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -179,26 +185,14 @@ public class PlayerControl : MonoBehaviour
 
         if (PlayerRun())
         {
-            if (rigid.isKinematic == true)
-            {
-                rigid.isKinematic = false;
-                character_rigid.isKinematic = false;
-            }
-
+         
 
             PlayerTurn();
 
-          
+            
 
         }
-        else
-        {
-            if (rigid.isKinematic == false)
-            {
-                rigid.isKinematic = true;
-                character_rigid.isKinematic = true;
-            }
-        }
+     
         FollowCamera();
     }
 
@@ -212,14 +206,9 @@ public class PlayerControl : MonoBehaviour
         {
 
 
-            //transform.localPosition = Vector3.MoveTowards(transform.position, target , speed * Time.deltaTime);
+            transform.localPosition = Vector3.MoveTowards(transform.position, target , speed * Time.deltaTime);
 
-            var dir = target - transform.position;
-
-            transform.position += dir.normalized *Time.deltaTime * speed;
-
-
-
+          
             return true;
         }
 
@@ -232,17 +221,22 @@ public class PlayerControl : MonoBehaviour
     // 플레이어 회전
     private void PlayerTurn()
     {
-       
-            var dir = target - transform.position;
+        var distance = Vector3.Distance(transform.position, target);
+        var dir = target - transform.position;
+        var dirXZ = new Vector3(dir.x, 0f, dir.z);
+        var targetRotation = Quaternion.LookRotation(dirXZ);
 
-            if (dir.x != 0 && dir.z != 0)
-            {
 
-                var dirXZ = new Vector3(dir.x, 0f, dir.z);
-                var targetRotation = Quaternion.LookRotation(dirXZ);
-                rigid.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 550.0f * Time.deltaTime);
-                character_rigid.rotation = rigid.rotation;
-            }
+        if (!(dir.x ==0 && dir.z==0))
+        {
+
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation,10* Time.deltaTime);
+
+            Debug.Log("회전");
+
+        }
+    
+        
       
     }
 
@@ -250,7 +244,7 @@ public class PlayerControl : MonoBehaviour
     private void FollowCamera()
     {
 
-        Vector3 cameraTarget = new Vector3(transform.position.x  - distanceX, player_camera.transform.position.y, transform.position.z - distanceZ );
+        Vector3 cameraTarget = new Vector3(transform.position.x  - distanceX, transform.position.y + distanceY, transform.position.z - distanceZ );
 
         player_camera.transform.position = Vector3.Lerp(player_camera.transform.position, cameraTarget, Time.deltaTime * speed);
 

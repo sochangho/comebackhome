@@ -79,6 +79,7 @@
     <Compile Include="Assets\Changho\Script\UiScript\Popup.cs" />
     <Compile Include="Assets\Changho\Script\WaveScript\ObjBuoyancy.cs" />
     <Compile Include="Assets\Changho\Script\WaveScript\WaveShip.cs" />
+    <Compile Include="Assets\Changho\Script\General\Slices.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Changho\Env\Shader\Water.shader" />

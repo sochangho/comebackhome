@@ -13,8 +13,48 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SimpleSelectedItems:
-    m_Keys: []
-    m_Values: 
+    m_Keys:
+    - Assets/Changho/Resources/Sprite/Rectangle.png
+    - Assets/Changho/Resources/Sprite/Rectangle.png.meta
+    - Assets/Changho/Resources/UI/Popup/InventoryPopup.prefab
+    - Assets/Changho/Resources/_Fonts.meta
+    - Assets/Changho/Resources/_Fonts/CookieRun Black.ttf
+    - Assets/Changho/Resources/_Fonts/CookieRun Black.ttf.meta
+    - Assets/Changho/Resources/_Fonts/CookieRun Bold.ttf
+    - Assets/Changho/Resources/_Fonts/CookieRun Bold.ttf.meta
+    - Assets/Changho/Resources/_Fonts/CookieRun Regular.ttf
+    - Assets/Changho/Resources/_Fonts/CookieRun Regular.ttf.meta
+    - Assets/Changho/Resources/_Fonts/GenghisKhan.otf
+    - Assets/Changho/Resources/_Fonts/GenghisKhan.otf.meta
+    - Assets/Changho/Resources/_Fonts/GodoB SDF.asset
+    - Assets/Changho/Resources/_Fonts/GodoB SDF.asset.meta
+    - Assets/Changho/Resources/_Fonts/GodoB.ttf
+    - Assets/Changho/Resources/_Fonts/GodoB.ttf.meta
+    - Assets/Changho/Resources/_Fonts/GodoM SDF.asset
+    - Assets/Changho/Resources/_Fonts/GodoM SDF.asset.meta
+    - Assets/Changho/Resources/_Fonts/GodoM.ttf
+    - Assets/Changho/Resources/_Fonts/GodoM.ttf.meta
+    - Assets/Changho/Resources/_Fonts/MADEWaffleSoftPERSONALUSE.otf
+    - Assets/Changho/Resources/_Fonts/MADEWaffleSoftPERSONALUSE.otf.meta
+    - Assets/Changho/Resources/_Fonts/godoMaum SDF.asset
+    - Assets/Changho/Resources/_Fonts/godoMaum SDF.asset.meta
+    - Assets/Changho/Resources/_Fonts/godoMaum.ttf
+    - Assets/Changho/Resources/_Fonts/godoMaum.ttf.meta
+    - Assets/Changho/Resources/_Fonts/godoRounded L SDF.asset
+    - Assets/Changho/Resources/_Fonts/godoRounded L SDF.asset.meta
+    - Assets/Changho/Resources/_Fonts/godoRounded L.ttf
+    - Assets/Changho/Resources/_Fonts/godoRounded L.ttf.meta
+    - Assets/Changho/Resources/_Fonts/godoRounded R SDF.asset
+    - Assets/Changho/Resources/_Fonts/godoRounded R SDF.asset.meta
+    - Assets/Changho/Resources/_Fonts/godoRounded R.ttf
+    - Assets/Changho/Resources/_Fonts/godoRounded R.ttf.meta
+    - Assets/Changho/Scenes/GameScene.unity
+    - Assets/Changho/Scenes/New Scene.unity
+    - Assets/Changho/Script/General/Slice.cs
+    - Assets/Changho/Script/General/TargetCollider.cs
+    - Assets/NewBrush.brush
+    - 
+    m_Values: 01010101010101010101010101010101010101010101010101010101010101010101010101010101
   RevisionSummary: 
   ChangesSearchValue: 
   SelectedHistoryRevision: 

@@ -9,17 +9,62 @@ public class Slice : MonoBehaviour
 
     public Material mt;
     public Vector3 plane_normal;
-    public Slices obj;
+    public GameObject meshSliceTarget;
+    public int idx;
 
-   
+    private List<GameObject> pragments = new List<GameObject>();
+    
+    [SerializeField] 
+    private float m_force = 0f;
+
+    [SerializeField] 
+    private Vector3 m_offest = Vector3.zero;
+
+    private bool trigger = true;
+
+
+    private void Update()
+    {
+
+        if(idx == 4 && trigger == true)
+        {
+
+            for(int i = 0; i < transform.childCount; i++)
+            {
+                if(transform.GetChild(i).gameObject.activeSelf == true)
+                {
+                    pragments.Add(transform.GetChild(i).gameObject);
+                }
+            }
+
+
+            for(int i = 0; i<pragments.Count; i++)
+            {
+               pragments[i].AddComponent<Rigidbody>().mass = 0.2f;
+                float x = Random.Range(-1, 1);
+                float y = Random.Range(-1, 1);
+                float z = Random.Range(-1, 1);
+
+                m_offest = new Vector3(x, y, z);
+               pragments[i].GetComponent<MeshCollider>().convex = true;
+               pragments[i].GetComponent<MeshCollider>().sharedMesh = pragments[i].GetComponent<MeshFilter>().sharedMesh;
+               pragments[i].GetComponent<Rigidbody>().AddExplosionForce(m_force, transform.position + m_offest, 10f);
+
+            }
+
+            trigger = false;
+        }
+        
+    }
+
     /// <summary>
     /// 메쉬 절단
     /// </summary>
     /// <param name="target">자를 오브젝트</param>
     /// <returns></returns>
-    public  void Slicer(GameObject target , Material material , Vector3 contact , int slices_idx)
+    public  void Slicer(GameObject target , Material material , Vector3 contact , int slice_idx)
     {
-
+        idx = slice_idx;
 
         // Debug.Log(contact.x + "," + contact.y + "," + contact.z);
 
@@ -54,7 +99,7 @@ public class Slice : MonoBehaviour
 
         Vector3 point = slicer_center;
 
-        if (slices_idx == 0)
+        if (idx == 0)
         {
             plane_normal = slicer_center - contact;
         }
@@ -62,7 +107,7 @@ public class Slice : MonoBehaviour
         {
             plane_normal = contact;
         }
-        Plane random_plane = new Plane(plane_normal.normalized, point);
+        Plane random_plane = new Plane(plane_normal.normalized, point );
 
 
         //기존 정점들을 두 가지로 나누어 저장해둘 곳
@@ -514,31 +559,13 @@ public class Slice : MonoBehaviour
       
 
 
-        GameObject aObject = new GameObject(target.name + "_A", typeof(MeshFilter), typeof(MeshRenderer));
-
-        aObject.transform.SetParent(obj.transform);
-
-        //if(aObject.GetComponent<Slice>().mt == null)
-        //{
-        //    aObject.GetComponent<Slice>().mt = mt;
-        //}
-
-
+        GameObject aObject = new GameObject(target.name + "_A", typeof(MeshFilter), typeof(MeshRenderer),typeof(MeshCollider));
+        aObject.transform.SetParent(transform);
         
 
-
-
-
-
-        GameObject bObject = new GameObject(target.name + "_B", typeof(MeshFilter), typeof(MeshRenderer) );
-        bObject.transform.SetParent(obj.transform);
-        //if(bObject.GetComponent<Slice>().mt == null)
-        //{
-        //    bObject.GetComponent<Slice>().mt = mt;
-        //}
-
-
-
+        GameObject bObject = new GameObject(target.name + "_B", typeof(MeshFilter), typeof(MeshRenderer),typeof(MeshCollider));
+        bObject.transform.SetParent(transform);
+      
         Material[] mats = new Material[target.GetComponent<MeshRenderer>().sharedMaterials.Length + 1];
 
 
@@ -565,13 +592,12 @@ public class Slice : MonoBehaviour
             bObject.transform.rotation = target.transform.rotation;
             bObject.transform.localScale = target.transform.localScale;
 
-
-        if (slices_idx < 4)
+        if (slice_idx < 4)
         {
             var verticalPlanenormal = Vector3.Cross(random_plane.normal, PlanCenter - aSideCutVerts[0]); 
 
-            Slicer(aObject, mt, verticalPlanenormal, slices_idx + 1);          
-            Slicer(bObject, mt, verticalPlanenormal, slices_idx + 1);
+            Slicer(aObject, mt, verticalPlanenormal, slice_idx + 1);          
+            Slicer(bObject, mt, verticalPlanenormal, slice_idx + 1);
 
             target.SetActive(false);
 
@@ -770,18 +796,7 @@ public class Slice : MonoBehaviour
 
 
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(collision.collider.tag == "Lightning")
-        {
 
-            Slicer(gameObject, mt, collision.contacts[0].point,0);
-
-            
-
-            collision.collider.gameObject.SetActive(false);
-        }   
-    }
 
 
 

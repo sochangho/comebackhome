@@ -66,6 +66,7 @@
     <Compile Include="Assets\Changho\Script\General\Slice.cs" />
     <Compile Include="Assets\Changho\Script\itemScript\Equipment.cs" />
     <Compile Include="Assets\Changho\Script\UiScript\Inventory\Slot.cs" />
+    <Compile Include="Assets\Changho\Script\General\Slices.cs" />
     <Compile Include="Assets\Changho\Script\itemScript\Fish.cs" />
     <Compile Include="Assets\Changho\Script\itemScript\Part.cs" />
     <Compile Include="Assets\Changho\Script\Player\HPbar.cs" />
@@ -79,7 +80,7 @@
     <Compile Include="Assets\Changho\Script\UiScript\Popup.cs" />
     <Compile Include="Assets\Changho\Script\WaveScript\ObjBuoyancy.cs" />
     <Compile Include="Assets\Changho\Script\WaveScript\WaveShip.cs" />
-    <Compile Include="Assets\Changho\Script\General\Slices.cs" />
+    <Compile Include="Assets\Changho\Script\General\TargetCollider.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Changho\Env\Shader\Water.shader" />

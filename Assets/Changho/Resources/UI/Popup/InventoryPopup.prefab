@@ -7006,6 +7006,46 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5453334869400479696}
     m_Modifications:
+    - target: {fileID: 2007014068672877562, guid: efc06cb706d49dd419d7a483ff8c425f, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 140
+      objectReference: {fileID: 0}
+    - target: {fileID: 2522016296127478858, guid: efc06cb706d49dd419d7a483ff8c425f, type: 3}
+      propertyPath: m_text
+      value: "Subscript: \uB0B4\uC6A9"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2522016296127478858, guid: efc06cb706d49dd419d7a483ff8c425f, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: f3cc5b96c0bc1ec498f4e68cd5b181b6, type: 2}
+    - target: {fileID: 2522016296127478858, guid: efc06cb706d49dd419d7a483ff8c425f, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -4742306317314138787, guid: f3cc5b96c0bc1ec498f4e68cd5b181b6, type: 2}
+    - target: {fileID: 3708390956082352063, guid: efc06cb706d49dd419d7a483ff8c425f, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3708390956082352063, guid: efc06cb706d49dd419d7a483ff8c425f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3708390956082352063, guid: efc06cb706d49dd419d7a483ff8c425f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3708390956082352063, guid: efc06cb706d49dd419d7a483ff8c425f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3708390956082352063, guid: efc06cb706d49dd419d7a483ff8c425f, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3708390956082352063, guid: efc06cb706d49dd419d7a483ff8c425f, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 5559438487273619346, guid: efc06cb706d49dd419d7a483ff8c425f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -7093,6 +7133,46 @@ PrefabInstance:
     - target: {fileID: 6325607857535183269, guid: efc06cb706d49dd419d7a483ff8c425f, type: 3}
       propertyPath: m_Name
       value: ItemPanelPopup
+      objectReference: {fileID: 0}
+    - target: {fileID: 6325607857535183269, guid: efc06cb706d49dd419d7a483ff8c425f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6721254056964456048, guid: efc06cb706d49dd419d7a483ff8c425f, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6721254056964456048, guid: efc06cb706d49dd419d7a483ff8c425f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6721254056964456048, guid: efc06cb706d49dd419d7a483ff8c425f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 115
+      objectReference: {fileID: 0}
+    - target: {fileID: 6721254056964456048, guid: efc06cb706d49dd419d7a483ff8c425f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6721254056964456048, guid: efc06cb706d49dd419d7a483ff8c425f, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 6721254056964456048, guid: efc06cb706d49dd419d7a483ff8c425f, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 8816789827163264746, guid: efc06cb706d49dd419d7a483ff8c425f, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: c39b3773082318040a6bb3a4ae3e630d, type: 2}
+    - target: {fileID: 8816789827163264746, guid: efc06cb706d49dd419d7a483ff8c425f, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -7168762413453554527, guid: c39b3773082318040a6bb3a4ae3e630d, type: 2}
+    - target: {fileID: 8816789827163264746, guid: efc06cb706d49dd419d7a483ff8c425f, type: 3}
+      propertyPath: m_text
+      value: "Name: \uB124\uC784"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: efc06cb706d49dd419d7a483ff8c425f, type: 3}
